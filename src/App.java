@@ -1,3 +1,4 @@
+import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -15,6 +16,37 @@ public class App {
             Holiday item = new Holiday(name, date);
             holidaysList.add(item);
         }
-        System.out.println(holidaysList);
+
+        Scanner input = new Scanner(System.in);
+        System.out.println("Você quer: (1) Procurar por uma data específica ou (2) Ver a lista de todos os feriados. Digite o número correspondente à opção.");
+
+        int option = 0;
+        try {
+            option = input.nextInt();
+        } catch (Exception e) {
+            System.out.println("Insira um número válido!");
+            return;
+        }
+
+        if(option == 1) {
+            try {
+                Scanner holidayInput = new Scanner(System.in);
+                System.out.println("Digite uma data no formato DD/MM/AAAA");
+                String holiday = holidayInput.nextLine();
+                for (Holiday item : holidaysList) {
+                    if (item.getDate().equals(holiday)) {
+                        System.out.println("O feriado correspondente à data informada é: " + item.getName());
+                        return;
+                    }
+                }
+                System.out.println("Não há um feriado na data informada.");
+            } catch (Exception e) {
+                System.out.println("Insira uma data no formato válido!");
+            }
+        } else if(option == 2){
+            for(Holiday item : holidaysList) {
+                System.out.println(item.getName() + " - " + item.getDate());
+            }
+        }
     }
 }
